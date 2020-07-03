@@ -20,9 +20,9 @@ if(!isset($_SESSION['username'])){
       <h1 class="style3"> Input Data Santri </h1>
       <br><br>
       <form method="post" action="proses/input-proses.php">
-        <table width="494" border="0">
+        <table width="550" border="0">
           <tr>
-            <td width="150">NIS</td>
+            <td width="200">NIS</td>
             <td width="10">:</td>
             <td width="300"><input name="nik1" type="text" size="25" maxlength="50" required></td>
           </tr>
@@ -48,18 +48,9 @@ if(!isset($_SESSION['username'])){
           </tr>
 
           <tr>
-            <td>Absensi Kelas</td>
+            <td>Absensi Kelas(Ketidakhadiran)</td>
             <td>:</td>
-            <td>
-              <select name="kriteria1_absensi" required="">
-                <option value="">Pilih Absensi</option>
-                <option value="5">tidak hadir 1-4 kali</option>
-                <option value="4">tidak hadir 5-8 kali</option>
-                <option value="3">tidak hadir 9-12 kali</option>
-                <option value="2">tidak hadir 13-16 kali</option>
-                <option value="1">tidak hadir 17 - lebih dari 20 kali</option>
-              </select>
-            </td>
+            <td><input name="kriteria1_absensi" type="text" size="25" maxlength="50" required></td>
           </tr>
 
           <tr>
@@ -80,16 +71,7 @@ if(!isset($_SESSION['username'])){
           <tr>
             <td>Nilai Mapel</td>
             <td>:</td>
-            <td>
-              <select name="kriteria3_mapel" required="">
-                <option value="">Pilih Rata - rata Mapel</option>
-                <option value="5">Sangat Tinggi (86-100)</option>
-                <option value="4">Tinggi (76-85.9)</option>
-                <option value="3">Sedang (66-75.9)</option>
-                <option value="2">Rendah (56-65.9)</option>
-                <option value="1">Sangat Rendah (<= 55)</option>
-              </select>
-            </td>
+            <td><input name="kriteria3_mapel" type="text" size="25" maxlength="50" required></td>
           </tr>
 
           <tr>

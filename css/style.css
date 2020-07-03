@@ -132,3 +132,7 @@ border: 2px solid #bc060e;
 	 box-shadow:0 2px 2px rgba(0,0,0, .5);
 	
 }
+
+table, tr, td{
+	font-size: 12px;
+}

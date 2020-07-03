@@ -6,7 +6,7 @@
 	$bobot = array(0.2, 0.1, 0.45, 0.25);
 
 	$crMax = mysqli_query($koneksi, "SELECT 
-		max(kriteria1_absensi) as maxK1, 
+		min(kriteria1_absensi) as minK1, 
 		max(kriteria2_extrakulikuler) as maxK2,
 		max(kriteria3_mapel) as maxK3,
 		max(kriteria4_perilaku) as maxK4
@@ -96,21 +96,21 @@
 						$no = 1;
 						//Kita gunakan rumus (Normalisasi x bobot)
 						while($dt3 = mysqli_fetch_array($sql3)){
-							$nilai1 = ($dt3['kriteria1_absensi']/$max['maxK1'])*$bobot[0];
+							$nilai1 = ($max['minK1']/$dt3['kriteria1_absensi'])*$bobot[0];
 							$nilai2 = ($dt3['kriteria2_extrakulikuler']/$max['maxK2'])*$bobot[1];
 							$nilai3 = ($dt3['kriteria3_mapel']/$max['maxK3'])*$bobot[2];
 							$nilai4 = ($dt3['kriteria4_perilaku']/$max['maxK4'])*$bobot[3];
 
-							$rangking = round(($nilai1 + $nilai2 + $nilai3 + $nilai4), 3); ?>
+							$rangking = round(($nilai1 + $nilai2 + $nilai3 + $nilai4), 5); ?>
 				
 							<tr>
 								<td align='center'><?= $no++; ?>.</td>
 								<td><?= getNama($dt3['nik']); ?></td>
 								<td align='center'><?= getKelas($dt3['nik']); ?></td>
 								<td align='center'><?= getTh_ajaran($dt3['nik']); ?></td>
-								<td align='center'><?= $nilai1; ?></td>
+								<td align='center'><?= round($nilai1, 5); ?></td>
 								<td align='center'><?= $nilai2; ?></td>
-								<td align='center'><?= $nilai3; ?></td>
+								<td align='center'><?= round($nilai3, 5); ?></td>
 								<td align='center'><?= $nilai4; ?></td>
 								<td align='center'><?= $rangking; ?></td>
 							</tr>
@@ -122,6 +122,7 @@
 				</table>
 				<button style="margin-left: 4px; float: left;"><a href="rangking.php" style="text-decoration-line: none"> << KEMBALI</a></button>
 			</div>
+			<br><br>
 		</div>
 	</div>
 </body>

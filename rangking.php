@@ -7,7 +7,7 @@ if(!isset($_SESSION['username'])){
 
 $bobot = array(0.2, 0.1, 0.45, 0.25);
 	$crMax = mysqli_query($koneksi, "SELECT 
-		max(kriteria1_absensi) as maxK1, 
+		min(kriteria1_absensi) as minK1, 
 		max(kriteria2_extrakulikuler) as maxK2,
 		max(kriteria3_mapel) as maxK3,
 		max(kriteria4_perilaku) as maxK4
@@ -49,6 +49,15 @@ $bobot = array(0.2, 0.1, 0.45, 0.25);
 	<link rel="stylesheet" href="css/menu.css" type="text/css" media="screen"> 
 	<script type="text/javascript" src="assets/js/jquery.min.js"></script>
 	<script type="text/javascript" src="assets/js/jquery.dataTables.min.js"></script>
+	<style type="text/css">
+		body{
+			max-height: 2000px;
+		}
+
+		table, tr, td{
+			font-size: 12px;
+		}
+	</style>
 </head>
 
 <body>
@@ -59,6 +68,12 @@ $bobot = array(0.2, 0.1, 0.45, 0.25);
 
 				<form action="proses/proses-arsip.php" method="post" style="margin-left: 5px; float: left;">
 					<input type="submit" name="arsip" value="Arsipkan">
+				</form>
+				<form action="cetak/export-excel.php" method="post" style="display: inline; margin-left: 5px; float: left;">
+					<input type="submit" name="submit" value="EXPORT EXCEL">
+				</form>
+				<form target="_blank" action="cetak/cetak.php" method="post" style="display: inline; margin-left: 5px; float: left;">
+					<input type="submit" name="submit" value="Print PDF">
 				</form>
 
 				<table id='example' class='display' cellspacing='0' width='100%' style="margin: 4px">
@@ -80,7 +95,7 @@ $bobot = array(0.2, 0.1, 0.45, 0.25);
 					$no = 1;
 					//Kita gunakan rumus (Normalisasi x bobot)
 					while ($dt3 = mysqli_fetch_array($sql3)):
-						$nilai1 = ($dt3['kriteria1_absensi']/$max['maxK1'])*$bobot[0];
+						$nilai1 = ($max['minK1']/$dt3['kriteria1_absensi'])*$bobot[0];
 						$nilai2 = ($dt3['kriteria2_extrakulikuler']/$max['maxK2'])*$bobot[1];
 						$nilai3 = ($dt3['kriteria3_mapel']/$max['maxK3'])*$bobot[2];
 						$nilai4 = ($dt3['kriteria4_perilaku']/$max['maxK4'])*$bobot[3];
@@ -94,23 +109,16 @@ $bobot = array(0.2, 0.1, 0.45, 0.25);
 							<td> <?= getNama($dt3['nik']); ?> </td>
 							<td align='center'> <?= getKelas($dt3['nik']); ?> </td>
 							<td align='center'> <?= getTh_ajaran($dt3['nik']); ?> </td>
-							<td align='center'> <?= $nilai1; ?> </td>
+							<td align='center'> <?= round($nilai1, 5); ?> </td>
 							<td align='center'> <?= $nilai2; ?> </td>
-							<td align='center'> <?= $nilai3; ?> </td>
+							<td align='center'> <?= round($nilai3, 5); ?> </td>
 							<td align='center'> <?= $nilai4; ?> </td>
 							<td align='center'> <?= $rangking; ?> </td>
 						</tr>
 
 					<?php endwhile; ?>
 					
-				</table>
-
-				<form action="cetak/export-excel.php" method="post" style="display: inline; margin-left: 5px; float: left;">
-					<input type="submit" name="submit" value="EXPORT EXCEL">
-				</form>
-				<form target="_blank" action="cetak/cetak.php" method="post" style="display: inline; margin-left: 5px; float: left;">
-					<input type="submit" name="submit" value="Print PDF">
-				</form>	
+				</table>	
 
 			</div>
 		</div>

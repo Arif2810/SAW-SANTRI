@@ -8,7 +8,7 @@ if(!isset($_SESSION['username'])){
 
 	//Cari Max atau min dari tiap kolom Matrik
 	$crMax = mysqli_query($koneksi, "SELECT 
-		max(kriteria1_absensi) as maxK1, 
+		min(kriteria1_absensi) as minK1, 
 		max(kriteria2_extrakulikuler) as maxK2,
 		max(kriteria3_mapel) as maxK3,
 		max(kriteria4_perilaku) as maxK4
@@ -46,6 +46,11 @@ if(!isset($_SESSION['username'])){
 	<link rel="stylesheet" href="css/menu.css" type="text/css" media="screen"> 
 	<script type="text/javascript" src="assets/js/jquery.min.js"></script>
 	<script type="text/javascript" src="assets/js/jquery.dataTables.min.js"></script>
+	<style type="text/css">
+		table, tr, td{
+			font-size: 12px;
+		}
+	</style>
 </head>
 <body>
 
@@ -76,10 +81,10 @@ if(!isset($_SESSION['username'])){
 						<td><?= getNama($dt2['nik']); ?></td>
 						<td align='center'><?= getKelas($dt2['nik']); ?></td>
 						<td align="center"><?= getTh_ajaran($dt2['nik']); ?></td>
-						<td align='center'><?= round($dt2['kriteria1_absensi']/$max['maxK1'],2); ?></td>
-						<td align='center'><?= round($dt2['kriteria2_extrakulikuler']/$max['maxK2'],2); ?></td>
-						<td align='center'><?= round($dt2['kriteria3_mapel']/$max['maxK3'],2); ?></td>
-						<td align='center'><?= round($dt2['kriteria4_perilaku']/$max['maxK4'],2); ?></td>
+						<td align='center'><?= round($max['minK1']/$dt2['kriteria1_absensi'], 5); ?></td>
+						<td align='center'><?= round($dt2['kriteria2_extrakulikuler']/$max['maxK2'], 5); ?></td>
+						<td align='center'><?= round($dt2['kriteria3_mapel']/$max['maxK3'], 5); ?></td>
+						<td align='center'><?= round($dt2['kriteria4_perilaku']/$max['maxK4'], 5); ?></td>
 					</tr>
 
 				<?php
